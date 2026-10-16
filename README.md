@@ -160,6 +160,10 @@ The main prompts, in order:
 - **Separate login and sign-up forms:** clearer intent and error messages, plus room for sign-up validation such as password rules and username availability.
 - **Pokémon detail page:** stats, abilities, height and weight, artwork and evolutions, so the app is useful beyond a list. The database already stores most of this data.
 - **A state manager** (e.g. Zustand) for session and favorites, instead of passing them down as props, so new screens don't need extra plumbing.
+- **Host on AWS:** frontend on S3 + CloudFront; API as a Docker container on ECS Fargate or App Runner; database moved from SQLite to RDS PostgreSQL. CloudFront routes `/api/*` to the API, so there's still no CORS.
+- **CI/CD and infrastructure as code:** GitHub Actions to test and deploy each part, with AWS CDK or Terraform for the infrastructure and secrets in Secrets Manager.
+- **Split the monorepo** into `pokepedia-api` and `pokepedia-web` once they need separate teams or release schedules. That needs a shared API contract (OpenAPI-generated types), a `/api/v1` prefix so each side deploys independently, and a configurable API URL.
+- **Production readiness:** hashed passwords with real sessions (or Cognito), rate limiting on login, a health-check endpoint, CloudWatch logs and alarms, and seeding as a one-off job instead of on server start.
 
 ### Time spent
 
